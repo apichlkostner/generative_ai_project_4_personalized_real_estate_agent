@@ -76,6 +76,40 @@ class LLM:
         )
 
         return result.model_dump(mode="json", exclude_unset=True)
+    
+    def results(self, context):
+        history = llm_history.get_by_session_id("id_1")
+        system_prompt = """
+        You are AI that will recommend user a real estates based on their answers to personal questions. 
+        You will only add information to your response that are in the users answers or than can be concluded from the answers.
+        Here are some available real estates that should be recommended to the user
+
+        -------------------
+        
+        {context}
+
+        -------------------
+        """
+
+        query = "Please write a summary about these houses and how they match to the users wishes."
+
+        prompt_template = ChatPromptTemplate.from_messages([
+            ("system", system_prompt),
+            ("user", "{query}"),
+        ])
+
+        pipeline = (
+            {
+                "query": lambda x: x["query"],
+                "context": lambda x: x["context"]
+            }
+            | prompt_template
+            | self.llm
+        )
+
+        result = pipeline.invoke({"query": query, "context": context})
+
+        return result.content
 
 
 def main():
@@ -88,15 +122,12 @@ def main():
     print(profile_json_string, "\n\n\n")
 
     db = Database(open_ai=False)
-    #db.load_data("data/data.json")
     db.load_db()
 
-    #list_documents()
     results = db.similarity_search(profile_json_string, k=3)
 
-    for doc in results:
-        print(doc.page_content)
-        #print(doc.metadata)
+    answer_for_customer = real_estate_llm.results(results)
+    print(answer_for_customer)
 
 if __name__ == '__main__':
     main()
