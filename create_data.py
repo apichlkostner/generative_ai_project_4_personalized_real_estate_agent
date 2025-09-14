@@ -86,7 +86,7 @@ def main():
     pretty_json = json.dumps(data_json, indent=2, sort_keys=False)
     print(pretty_json)
 
-    with open('data.json', 'w') as file:
+    with open('data/data.json', 'w') as file:
         json.dump(data_json, file, indent=4, sort_keys=False)
 
 if __name__ == '__main__':
