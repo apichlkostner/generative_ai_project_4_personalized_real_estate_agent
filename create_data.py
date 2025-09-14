@@ -4,15 +4,30 @@ from langchain.prompts import (
     HumanMessagePromptTemplate
 )
 from langchain.prompts import ChatPromptTemplate
+from pydantic import BaseModel, Field
+from typing import List
 
 import json
+
+class RealEstate(BaseModel):
+    Neighborhood: str = Field(default="GreenField", description="Neighborhood"),
+    Price: str = Field(default="500.000$", description="Price"),
+    Bedrooms: int = Field(default=3, description="Bedrooms"),
+    Bathrooms: int = Field(default=2, description="Bathrooms"),
+    HouseSize: int = Field(default=200, description="House size"),
+    Description:str = Field(default="", description="Description"),
+    NeighborhoodDescription: str = Field(default="", description="Neighborhood description")
+
+class RealEstateCollection(RealEstate):
+    RealEstateObj: List[RealEstate] = Field(description="List of RealEstates")
 
 class GenerateData:
     model = None
 
 
     def init_model(self, model_name="llama3.2:1b-instruct-fp16", temperature=0.0):
-        self.model = ChatOllama(temperature=temperature, model=model_name)
+        model = ChatOllama(temperature=temperature, model=model_name)
+        self.model = model.with_structured_output(RealEstateCollection)
 
     def generate_data(self):
         
@@ -40,7 +55,7 @@ class GenerateData:
             | self.model
         )
 
-        query = "Generate a json file with 10 of these data sets. Make variations in all fields."
+        query = "Generate 20 of these data sets. Make variations in all fields."
 
         example_dic = {
             "Neighborhood": "Green Oaks",
@@ -62,24 +77,17 @@ class GenerateData:
 
 def main():
     generator = GenerateData()
-    generator.init_model(temperature=0.1)
+    generator.init_model(temperature=0.0)
     data = generator.generate_data()
 
-    #print(data.content)
+    data_json = data.model_dump(mode="json", exclude_unset=True)
 
-    data_json_str = data.content
-    lines = data_json_str.splitlines()
-    data_json_str = '\n'.join(lines[1:-1])
-
-    print(data_json_str)
-
-    json_data = json.loads(data_json_str)
-
-    pretty_json = json.dumps(json_data, indent=2, sort_keys=False)
+    # print for debug
+    pretty_json = json.dumps(data_json, indent=2, sort_keys=False)
     print(pretty_json)
 
     with open('data.json', 'w') as file:
-        json.dump(json_data, file, indent=4, sort_keys=False)
+        json.dump(data_json, file, indent=4, sort_keys=False)
 
 if __name__ == '__main__':
     main()
