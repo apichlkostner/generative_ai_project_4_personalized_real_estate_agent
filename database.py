@@ -1,5 +1,5 @@
-from langchain.vectorstores import Chroma
-from langchain.document_loaders.json_loader import JSONLoader
+from langchain_community.vectorstores import Chroma
+from langchain_community.document_loaders import JSONLoader
 
 from langchain_ollama import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
@@ -7,8 +7,9 @@ from langchain_openai import OpenAIEmbeddings
 import chromadb
 
 class Database:
-    def __init__(self, persist_directory=".chroma_db", open_ai=True):
+    def __init__(self, persist_directory=".chroma_db", collection_name="real_estate", open_ai=True):
         self.persist_directory = persist_directory
+        self.collection_name=collection_name
         if open_ai:
             self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
         else:
@@ -23,13 +24,17 @@ class Database:
             print(f"Content: {doc.page_content}")
             print(f"Metadata: {doc.metadata}")
 
-        self.db = Chroma.from_documents(data, embedding=self.embeddings, persist_directory=self.persist_directory, collection_name="real_estate")
+        self.db = Chroma.from_documents(data, embedding=self.embeddings, persist_directory=self.persist_directory, collection_name=self.collection_name)
 
     def load_db(self):
-        vector_store = Chroma(
+        self.db = Chroma(
             persist_directory=self.persist_directory,
-            embedding_function=self.embeddings
+            embedding_function=self.embeddings,
+            collection_name=self.collection_name
         )
+
+    def similarity_search(self, query, k=3):
+        return self.db.similarity_search(query, k)
 
 def list_documents():
     client = chromadb.PersistentClient(path=".chroma_db")
@@ -56,7 +61,12 @@ def main():
     #db.load_data("data.json")
     db.load_db()
 
-    list_documents()
+    #list_documents()
+    results = db.similarity_search("silent neighborhood", k=3)
+
+    for doc in results:
+        print(doc.page_content)
+        print(doc.metadata)  # Optional: print metadata if needed
     
 
     
