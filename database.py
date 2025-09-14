@@ -58,15 +58,14 @@ class Database:
 
 def main():
     db = Database(open_ai=False)
-    db.load_data("data/data.json")
+    #db.load_data("data/data.json")
     #db.load_db()
 
     #list_documents()
-    results = db.similarity_search("silent neighborhood", k=3)
+    #results = db.similarity_search("silent neighborhood", k=3)
 
-    for doc in results:
-        print(doc.page_content)
-        print(doc.metadata)  # Optional: print metadata if needed
+    #for doc in results:
+    #    print(doc.page_content)
 
 if __name__ == '__main__':
     main()

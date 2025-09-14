@@ -55,7 +55,11 @@ class GenerateData:
             | self.model
         )
 
-        query = "Generate 20 of these data sets. Make variations in all fields."
+        query = """
+                Generate 20 of these data sets. Make variations in all fields.
+                Think of different types of customers, families with childen, older persons, people that live alone.
+                Also think of different personalities and their needs.
+        """
 
         example_dic = {
             "Neighborhood": "Green Oaks",

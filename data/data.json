@@ -6,116 +6,89 @@
             "Bedrooms": 4,
             "Bathrooms": 3,
             "HouseSize": 2800,
-            "Description": "Welcome to this modern eco-friendly haven nestled in the heart of Green Oaks. This spacious 4-bedroom, 3-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure. Natural light floods the living spaces, highlighting the beautiful hardwood floors and eco-conscious finishes. The open-concept kitchen and dining area lead to a spacious backyard with a vegetable garden, perfect for the eco-conscious family.",
+            "Description": "Welcome to this modern eco-friendly home in Green Oaks. This spacious 4-bedroom, 3-bathroom property boasts energy-efficient features such as solar panels and a well-insulated structure. Natural light floods the living spaces, highlighting the beautiful hardwood floors and eco-conscious finishes. The open-concept kitchen and dining area lead to a spacious backyard with a vegetable garden, perfect for the eco-conscious family.",
             "NeighborhoodDescription": "Green Oaks is a close-knit, environmentally-conscious community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe. With easy access to public transportation and bike lanes, commuting is a breeze."
         },
         {
-            "Neighborhood": "Green Valley",
+            "Neighborhood": "Beverly Hills",
+            "Price": "$1,200,000",
+            "Bedrooms": 5,
+            "Bathrooms": 4,
+            "HouseSize": 3500,
+            "Description": "Experience luxury living in Beverly Hills with this stunning 5-bedroom, 4-bathroom estate. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym. Natural light pours in through the floor-to-ceiling windows, highlighting the beautiful hardwood floors and designer finishes.",
+            "NeighborhoodDescription": "Beverly Hills is a world-renowned community with access to world-class shopping, dining, and entertainment options. Take a stroll along Rodeo Drive or enjoy a night out at one of the many upscale restaurants in the area. With easy access to public transportation, this property offers unparalleled convenience."
+        },
+        {
+            "Neighborhood": "San Francisco",
             "Price": "$600,000",
             "Bedrooms": 2,
             "Bathrooms": 1,
             "HouseSize": 1500,
-            "Description": "This charming 2-bedroom, 1-bathroom home is a great starter property for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space, perfect for small families.",
-            "NeighborhoodDescription": "Green Valley is a family-friendly community with parks, playgrounds, and easy access to local schools. Take a short drive to the nearby Green Valley Park or visit the local library."
+            "Description": "Discover the charm of San Francisco with this cozy 2-bedroom, 1-bathroom apartment. This compact property boasts a private balcony and is within walking distance to public transportation and local amenities.",
+            "NeighborhoodDescription": "San Francisco is a vibrant city with access to world-class attractions such as Alcatraz Island and Fisherman's Wharf. Take a stroll through Golden Gate Park or enjoy the views from the top of Nob Hill. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Oakwood Hills",
-            "Price": "$1,200,000",
-            "Bedrooms": 5,
-            "Bathrooms": 4,
-            "HouseSize": 3500,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Oakwood Hills. This spacious 5-bedroom, 4-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Oakwood Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Oakwood Hills Golf Course or visit the local art gallery."
-        },
-        {
-            "Neighborhood": "Green Oaks",
-            "Price": "$750,000",
+            "Neighborhood": "Miami Beach",
+            "Price": "$450,000",
             "Bedrooms": 3,
             "Bathrooms": 2,
-            "HouseSize": 2000,
-            "Description": "This charming 3-bedroom, 2-bathroom home is a great value for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe."
+            "HouseSize": 1800,
+            "Description": "Escape to Miami Beach with this stylish 3-bedroom, 2-bathroom condo. This modern property boasts a private balcony and is within walking distance to public transportation and local amenities.",
+            "NeighborhoodDescription": "Miami Beach is a vibrant beach town with access to world-class attractions such as South Beach and the Art Deco District. Take a stroll along Ocean Drive or enjoy the views from the top of the Miami Beach Boardwalk. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Woodland Hills",
-            "Price": "$1,000,000",
+            "Neighborhood": "New York City",
+            "Price": "$1,800,000",
+            "Bedrooms": 6,
+            "Bathrooms": 5,
+            "HouseSize": 4000,
+            "Description": "Experience the ultimate in luxury living in New York City with this stunning 6-bedroom, 5-bathroom penthouse. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
+            "NeighborhoodDescription": "New York City is a world-renowned metropolis with access to world-class attractions such as the Statue of Liberty and Central Park. Take a stroll through Times Square or enjoy the views from the top of One World Trade Center. With easy access to public transportation, this property offers unparalleled convenience."
+        },
+        {
+            "Neighborhood": "Austin",
+            "Price": "$350,000",
             "Bedrooms": 4,
             "Bathrooms": 3,
-            "HouseSize": 3000,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Woodland Hills. This spacious 4-bedroom, 3-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Woodland Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Woodland Hills Golf Course or visit the local art gallery."
+            "HouseSize": 2200,
+            "Description": "Discover the charm of Austin with this cozy 4-bedroom, 3-bathroom home. This compact property boasts a private patio and is within walking distance to public transportation and local amenities.",
+            "NeighborhoodDescription": "Austin is a vibrant city with access to world-class attractions such as the Texas State Capitol and Zilker Park. Take a stroll through 6th Street or enjoy the views from the top of the Austin City Limits Live at The Moody Theater. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Green Oaks",
+            "Neighborhood": "Chicago",
             "Price": "$800,000",
-            "Bedrooms": 2,
-            "Bathrooms": 1,
-            "HouseSize": 1800,
-            "Description": "This charming 2-bedroom, 1-bathroom home is a great starter property for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe."
-        },
-        {
-            "Neighborhood": "Oakwood Hills",
-            "Price": "$900,000",
-            "Bedrooms": 3,
-            "Bathrooms": 2,
-            "HouseSize": 2200,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Oakwood Hills. This spacious 3-bedroom, 2-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Oakwood Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Oakwood Hills Golf Course or visit the local art gallery."
-        },
-        {
-            "Neighborhood": "Green Oaks",
-            "Price": "$550,000",
-            "Bedrooms": 4,
-            "Bathrooms": 3,
-            "HouseSize": 2600,
-            "Description": "This charming 4-bedroom, 3-bathroom home is a great value for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe."
-        },
-        {
-            "Neighborhood": "Woodland Hills",
-            "Price": "$1,150,000",
             "Bedrooms": 5,
             "Bathrooms": 4,
-            "HouseSize": 3500,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Woodland Hills. This spacious 5-bedroom, 4-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Woodland Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Woodland Hills Golf Course or visit the local art gallery."
+            "HouseSize": 3000,
+            "Description": "Experience the ultimate in luxury living in Chicago with this stunning 5-bedroom, 4-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
+            "NeighborhoodDescription": "Chicago is a world-renowned city with access to world-class attractions such as Willis Tower and Navy Pier. Take a stroll along the Magnificent Mile or enjoy the views from the top of the John Hancock Center. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Green Oaks",
-            "Price": "$700,000",
-            "Bedrooms": 3,
-            "Bathrooms": 2,
-            "HouseSize": 2100,
-            "Description": "This charming 3-bedroom, 2-bathroom home is a great starter property for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe."
-        },
-        {
-            "Neighborhood": "Oakwood Hills",
-            "Price": "$1,200,000",
+            "Neighborhood": "Seattle",
+            "Price": "$900,000",
             "Bedrooms": 4,
             "Bathrooms": 3,
-            "HouseSize": 3000,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Oakwood Hills. This spacious 4-bedroom, 3-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Oakwood Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Oakwood Hills Golf Course or visit the local art gallery."
+            "HouseSize": 2500,
+            "Description": "Discover the charm of Seattle with this cozy 4-bedroom, 3-bathroom home. This compact property boasts a private patio and is within walking distance to public transportation and local amenities.",
+            "NeighborhoodDescription": "Seattle is a vibrant city with access to world-class attractions such as Pike Place Market and the Space Needle. Take a stroll through Capitol Hill or enjoy the views from the top of the Seattle Waterfront. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Green Oaks",
-            "Price": "$750,000",
-            "Bedrooms": 2,
-            "Bathrooms": 1,
-            "HouseSize": 1800,
-            "Description": "This charming 2-bedroom, 1-bathroom home is a great starter property for first-time buyers. The open-concept living area leads to a cozy kitchen and dining space.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe."
+            "Neighborhood": "Boston",
+            "Price": "$1,200,000",
+            "Bedrooms": 6,
+            "Bathrooms": 5,
+            "HouseSize": 4500,
+            "Description": "Experience the ultimate in luxury living in Boston with this stunning 6-bedroom, 5-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
+            "NeighborhoodDescription": "Boston is a world-renowned city with access to world-class attractions such as the Freedom Trail and Faneuil Hall Marketplace. Take a stroll through the Boston Public Garden or enjoy the views from the top of the John Hancock Tower. With easy access to public transportation, this property offers unparalleled convenience."
         },
         {
-            "Neighborhood": "Woodland Hills",
-            "Price": "$900,000",
-            "Bedrooms": 3,
-            "Bathrooms": 2,
-            "HouseSize": 2200,
-            "Description": "Escape to this luxurious eco-friendly estate nestled in the heart of Woodland Hills. This spacious 3-bedroom, 2-bathroom home boasts energy-efficient features such as solar panels and a well-insulated structure.",
-            "NeighborhoodDescription": "Woodland Hills is a secluded community with private roads, parks, and easy access to nature reserves. Take a short drive to the nearby Oakwood Hills Golf Course or visit the local art gallery."
+            "Neighborhood": "Washington D.C.",
+            "Price": "$1,500,000",
+            "Bedrooms": 7,
+            "Bathrooms": 6,
+            "HouseSize": 5500,
+            "Description": "Discover the charm of Washington D.C. with this stunning 7-bedroom, 6-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
+            "NeighborhoodDescription": "Washington D.C. is a world-renowned city with access to world-class attractions such as the National Mall and the Smithsonian Museums. Take a stroll through Georgetown or enjoy the views from the top of the Washington Monument. With easy access to public transportation, this property offers unparalleled convenience."
         }
     ]
 }
