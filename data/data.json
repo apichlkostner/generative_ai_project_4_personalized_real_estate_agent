@@ -1,94 +1,157 @@
 {
     "RealEstateObj": [
         {
-            "Neighborhood": "Green Oaks",
-            "Price": "$850,000",
-            "Bedrooms": 4,
-            "Bathrooms": 3,
-            "HouseSize": 2800,
-            "Description": "Welcome to this modern eco-friendly home in Green Oaks. This spacious 4-bedroom, 3-bathroom property boasts energy-efficient features such as solar panels and a well-insulated structure. Natural light floods the living spaces, highlighting the beautiful hardwood floors and eco-conscious finishes. The open-concept kitchen and dining area lead to a spacious backyard with a vegetable garden, perfect for the eco-conscious family.",
-            "NeighborhoodDescription": "Green Oaks is a close-knit, environmentally-conscious community with access to organic grocery stores, community gardens, and bike paths. Take a stroll through the nearby Green Oaks Park or grab a cup of coffee at the cozy Green Bean Cafe. With easy access to public transportation and bike lanes, commuting is a breeze."
-        },
-        {
-            "Neighborhood": "Beverly Hills",
-            "Price": "$1,200,000",
-            "Bedrooms": 5,
-            "Bathrooms": 4,
-            "HouseSize": 3500,
-            "Description": "Experience luxury living in Beverly Hills with this stunning 5-bedroom, 4-bathroom estate. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym. Natural light pours in through the floor-to-ceiling windows, highlighting the beautiful hardwood floors and designer finishes.",
-            "NeighborhoodDescription": "Beverly Hills is a world-renowned community with access to world-class shopping, dining, and entertainment options. Take a stroll along Rodeo Drive or enjoy a night out at one of the many upscale restaurants in the area. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "San Francisco",
-            "Price": "$600,000",
-            "Bedrooms": 2,
-            "Bathrooms": 1,
-            "HouseSize": 1500,
-            "Description": "Discover the charm of San Francisco with this cozy 2-bedroom, 1-bathroom apartment. This compact property boasts a private balcony and is within walking distance to public transportation and local amenities.",
-            "NeighborhoodDescription": "San Francisco is a vibrant city with access to world-class attractions such as Alcatraz Island and Fisherman's Wharf. Take a stroll through Golden Gate Park or enjoy the views from the top of Nob Hill. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "Miami Beach",
-            "Price": "$450,000",
-            "Bedrooms": 3,
-            "Bathrooms": 2,
-            "HouseSize": 1800,
-            "Description": "Escape to Miami Beach with this stylish 3-bedroom, 2-bathroom condo. This modern property boasts a private balcony and is within walking distance to public transportation and local amenities.",
-            "NeighborhoodDescription": "Miami Beach is a vibrant beach town with access to world-class attractions such as South Beach and the Art Deco District. Take a stroll along Ocean Drive or enjoy the views from the top of the Miami Beach Boardwalk. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "New York City",
-            "Price": "$1,800,000",
-            "Bedrooms": 6,
-            "Bathrooms": 5,
-            "HouseSize": 4000,
-            "Description": "Experience the ultimate in luxury living in New York City with this stunning 6-bedroom, 5-bathroom penthouse. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
-            "NeighborhoodDescription": "New York City is a world-renowned metropolis with access to world-class attractions such as the Statue of Liberty and Central Park. Take a stroll through Times Square or enjoy the views from the top of One World Trade Center. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "Austin",
-            "Price": "$350,000",
-            "Bedrooms": 4,
-            "Bathrooms": 3,
-            "HouseSize": 2200,
-            "Description": "Discover the charm of Austin with this cozy 4-bedroom, 3-bathroom home. This compact property boasts a private patio and is within walking distance to public transportation and local amenities.",
-            "NeighborhoodDescription": "Austin is a vibrant city with access to world-class attractions such as the Texas State Capitol and Zilker Park. Take a stroll through 6th Street or enjoy the views from the top of the Austin City Limits Live at The Moody Theater. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "Chicago",
-            "Price": "$800,000",
-            "Bedrooms": 5,
-            "Bathrooms": 4,
-            "HouseSize": 3000,
-            "Description": "Experience the ultimate in luxury living in Chicago with this stunning 5-bedroom, 4-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
-            "NeighborhoodDescription": "Chicago is a world-renowned city with access to world-class attractions such as Willis Tower and Navy Pier. Take a stroll along the Magnificent Mile or enjoy the views from the top of the John Hancock Center. With easy access to public transportation, this property offers unparalleled convenience."
-        },
-        {
-            "Neighborhood": "Seattle",
-            "Price": "$900,000",
+            "Neighborhood": "Sunnyvale",
+            "Price": "$750,000",
             "Bedrooms": 4,
             "Bathrooms": 3,
             "HouseSize": 2500,
-            "Description": "Discover the charm of Seattle with this cozy 4-bedroom, 3-bathroom home. This compact property boasts a private patio and is within walking distance to public transportation and local amenities.",
-            "NeighborhoodDescription": "Seattle is a vibrant city with access to world-class attractions such as Pike Place Market and the Space Needle. Take a stroll through Capitol Hill or enjoy the views from the top of the Seattle Waterfront. With easy access to public transportation, this property offers unparalleled convenience."
+            "Description": "This stunning 4-bedroom, 3-bathroom home in Sunnyvale is perfect for families. With a spacious open floor plan, a modern kitchen with stainless steel appliances, and a large backyard for kids to play, this home is designed for family living. The master suite features a walk-in closet and en-suite bathroom, while the additional bedrooms are perfect for children or guests. Enjoy community parks and top-rated schools nearby.",
+            "NeighborhoodDescription": "Sunnyvale is a family-friendly neighborhood known for its excellent schools, parks, and community events. Families can enjoy weekend picnics at Sunnyvale Park or take part in local festivals throughout the year."
         },
         {
-            "Neighborhood": "Boston",
+            "Neighborhood": "Downtown",
             "Price": "$1,200,000",
+            "Bedrooms": 2,
+            "Bathrooms": 2,
+            "HouseSize": 1200,
+            "Description": "Experience urban living at its finest in this chic 2-bedroom, 2-bathroom condo located in the heart of Downtown. With floor-to-ceiling windows offering stunning city views, a modern kitchen, and access to a rooftop terrace, this home is perfect for young professionals or couples. Enjoy the vibrant nightlife, restaurants, and cultural attractions just steps away from your front door.",
+            "NeighborhoodDescription": "Downtown is a bustling urban area filled with trendy restaurants, art galleries, and nightlife. It's ideal for those who thrive in a fast-paced environment and enjoy the convenience of city living."
+        },
+        {
+            "Neighborhood": "Maplewood",
+            "Price": "$500,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 1800,
+            "Description": "This charming 3-bedroom, 2-bathroom home in Maplewood is perfect for first-time buyers. Featuring a cozy living room with a fireplace, a spacious kitchen, and a lovely backyard, this home offers comfort and warmth. The neighborhood is quiet and family-oriented, making it a great place to settle down.",
+            "NeighborhoodDescription": "Maplewood is a peaceful neighborhood with tree-lined streets, friendly neighbors, and a strong sense of community. It's close to schools, parks, and local shops."
+        },
+        {
+            "Neighborhood": "Hillcrest",
+            "Price": "$900,000",
+            "Bedrooms": 5,
+            "Bathrooms": 4,
+            "HouseSize": 3200,
+            "Description": "This luxurious 5-bedroom, 4-bathroom home in Hillcrest is perfect for large families or those who love to entertain. With a gourmet kitchen, a spacious living area, and a beautifully landscaped yard, this home is designed for comfort and style. The master suite includes a spa-like bathroom and a private balcony.",
+            "NeighborhoodDescription": "Hillcrest is an upscale neighborhood known for its beautiful homes, excellent schools, and proximity to outdoor activities. Residents enjoy hiking trails, golf courses, and community events."
+        },
+        {
+            "Neighborhood": "Riverside",
+            "Price": "$650,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 2100,
+            "Description": "This lovely 3-bedroom, 2-bathroom home in Riverside features an open-concept layout, a modern kitchen, and a large backyard with a deck. Perfect for families or those who love to host gatherings, this home offers both comfort and style. The neighborhood is known for its friendly atmosphere and community spirit.",
+            "NeighborhoodDescription": "Riverside is a vibrant community with a mix of families and young professionals. The area boasts parks, walking trails, and a strong sense of community."
+        },
+        {
+            "Neighborhood": "Lakeside",
+            "Price": "1,000,000",
+            "Bedrooms": 4,
+            "Bathrooms": 3,
+            "HouseSize": 2800,
+            "Description": "This stunning 4-bedroom, 3-bathroom home in Lakeside offers breathtaking lake views and a serene atmosphere. With a spacious layout, gourmet kitchen, and outdoor entertaining area, this home is perfect for those who appreciate nature and tranquility. The master suite features a private balcony overlooking the lake.",
+            "NeighborhoodDescription": "Lakeside is a picturesque neighborhood known for its beautiful homes and outdoor recreational activities. Residents enjoy boating, fishing, and hiking in the nearby nature reserves."
+        },
+        {
+            "Neighborhood": "Old Town",
+            "Price": "850,000",
+            "Bedrooms": 2,
+            "Bathrooms": 2,
+            "HouseSize": 1500,
+            "Description": "This charming 2-bedroom, 2-bathroom townhouse in Old Town features historic architecture and modern amenities. With a cozy living area, updated kitchen, and private patio, this home is perfect for those who appreciate character and convenience. Enjoy local shops, cafes, and cultural attractions just a short walk away.",
+            "NeighborhoodDescription": "Old Town is a historic neighborhood with a vibrant arts scene, unique shops, and a strong sense of community. It's ideal for those who enjoy a lively atmosphere."
+        },
+        {
+            "Neighborhood": "Cedar Grove",
+            "Price": "400,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 1600,
+            "Description": "This affordable 3-bedroom, 2-bathroom home in Cedar Grove is perfect for first-time buyers or those looking to downsize. With a cozy living room, a functional kitchen, and a small yard, this home offers comfort without breaking the bank. The neighborhood is quiet and family-friendly.",
+            "NeighborhoodDescription": "Cedar Grove is a welcoming community with a mix of families and retirees. It's close to schools, parks, and local amenities."
+        },
+        {
+            "Neighborhood": "Westfield",
+            "Price": "1,500,000",
             "Bedrooms": 6,
             "Bathrooms": 5,
-            "HouseSize": 4500,
-            "Description": "Experience the ultimate in luxury living in Boston with this stunning 6-bedroom, 5-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
-            "NeighborhoodDescription": "Boston is a world-renowned city with access to world-class attractions such as the Freedom Trail and Faneuil Hall Marketplace. Take a stroll through the Boston Public Garden or enjoy the views from the top of the John Hancock Tower. With easy access to public transportation, this property offers unparalleled convenience."
+            "HouseSize": 4000,
+            "Description": "This magnificent 6-bedroom, 5-bathroom estate in Westfield is perfect for those who desire luxury and space. With a grand entrance, gourmet kitchen, and expansive outdoor area, this home is designed for entertaining. The master suite includes a sitting area and spa-like bathroom.",
+            "NeighborhoodDescription": "Westfield is an exclusive neighborhood known for its luxury homes, top-rated schools, and proximity to upscale shopping and dining."
         },
         {
-            "Neighborhood": "Washington D.C.",
-            "Price": "$1,500,000",
-            "Bedrooms": 7,
-            "Bathrooms": 6,
-            "HouseSize": 5500,
-            "Description": "Discover the charm of Washington D.C. with this stunning 7-bedroom, 6-bathroom mansion. This opulent property boasts top-of-the-line features such as a private movie theater and a state-of-the-art gym.",
-            "NeighborhoodDescription": "Washington D.C. is a world-renowned city with access to world-class attractions such as the National Mall and the Smithsonian Museums. Take a stroll through Georgetown or enjoy the views from the top of the Washington Monument. With easy access to public transportation, this property offers unparalleled convenience."
+            "Neighborhood": "Eastside",
+            "Price": "550,000",
+            "Bedrooms": 2,
+            "Bathrooms": 1,
+            "HouseSize": 900,
+            "Description": "This cozy 2-bedroom, 1-bathroom bungalow in Eastside is perfect for singles or couples. With a charming front porch, a functional kitchen, and a small yard, this home offers a comfortable living space. The neighborhood is close to public transportation and local shops.",
+            "NeighborhoodDescription": "Eastside is a vibrant neighborhood with a mix of young professionals and families. It's known for its community events and local markets."
+        },
+        {
+            "Neighborhood": "Southridge",
+            "Price": "1,100,000",
+            "Bedrooms": 4,
+            "Bathrooms": 3,
+            "HouseSize": 3000,
+            "Description": "This spacious 4-bedroom, 3-bathroom home in Southridge is perfect for families who love to entertain. With a large kitchen, open living spaces, and a backyard with a pool, this home is designed for fun and relaxation. The master suite features a luxurious bathroom and walk-in closet.",
+            "NeighborhoodDescription": "Southridge is a family-oriented neighborhood with parks, schools, and recreational facilities. It's ideal for those who enjoy an active lifestyle."
+        },
+        {
+            "Neighborhood": "Northgate",
+            "Price": "700,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 2200,
+            "Description": "This beautiful 3-bedroom, 2-bathroom home in Northgate features a modern design, spacious living areas, and a large backyard. Perfect for families or those who love to entertain, this home offers both style and comfort. The neighborhood is known for its friendly atmosphere and community events.",
+            "NeighborhoodDescription": "Northgate is a welcoming community with a mix of families and young professionals. It's close to schools, parks, and local amenities."
+        },
+        {
+            "Neighborhood": "Forest Hill",
+            "Price": "950,000",
+            "Bedrooms": 5,
+            "Bathrooms": 4,
+            "HouseSize": 3500,
+            "Description": "This luxurious 5-bedroom, 4-bathroom home in Forest Hill is perfect for those who appreciate elegance and space. With a grand foyer, gourmet kitchen, and beautifully landscaped yard, this home is designed for entertaining. The master suite includes a private sitting area and spa-like bathroom.",
+            "NeighborhoodDescription": "Forest Hill is an upscale neighborhood known for its beautiful homes, excellent schools, and proximity to outdoor activities."
+        },
+        {
+            "Neighborhood": "Brookside",
+            "Price": "600,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 2000,
+            "Description": "This charming 3-bedroom, 2-bathroom home in Brookside features a cozy living room, updated kitchen, and a spacious backyard. Perfect for families or those who love to host gatherings, this home offers both comfort and style. The neighborhood is known for its friendly atmosphere and community spirit.",
+            "NeighborhoodDescription": "Brookside is a vibrant community with a mix of families and young professionals. The area boasts parks, walking trails, and a strong sense of community."
+        },
+        {
+            "Neighborhood": "Seaside",
+            "Price": "1,300,000",
+            "Bedrooms": 4,
+            "Bathrooms": 3,
+            "HouseSize": 2800,
+            "Description": "This stunning 4-bedroom, 3-bathroom home in Seaside offers breathtaking ocean views and a serene atmosphere. With a spacious layout, gourmet kitchen, and outdoor entertaining area, this home is perfect for those who appreciate nature and tranquility. The master suite features a private balcony overlooking the ocean.",
+            "NeighborhoodDescription": "Seaside is a picturesque neighborhood known for its beautiful homes and outdoor recreational activities. Residents enjoy beach access, water sports, and hiking in the nearby nature reserves."
+        },
+        {
+            "Neighborhood": "Pine Valley",
+            "Price": "800,000",
+            "Bedrooms": 3,
+            "Bathrooms": 2,
+            "HouseSize": 2400,
+            "Description": "This lovely 3-bedroom, 2-bathroom home in Pine Valley features an open-concept layout, a modern kitchen, and a large backyard with a deck. Perfect for families or those who love to host gatherings, this home offers both comfort and style. The neighborhood is known for its friendly atmosphere and community spirit.",
+            "NeighborhoodDescription": "Pine Valley is a vibrant community with a mix of families and young professionals. The area boasts parks, walking trails, and a strong sense of community."
+        },
+        {
+            "Neighborhood": "Silver Lake",
+            "Price": "1,100,000",
+            "Bedrooms": 4,
+            "Bathrooms": 3,
+            "HouseSize": 3200,
+            "Description": "This luxurious 4-bedroom, 3-bathroom home in Silver Lake is perfect for those who desire elegance and space. With a grand entrance, gourmet kitchen, and expansive outdoor area, this home is designed for entertaining. The master suite includes a sitting area and spa-like bathroom.",
+            "NeighborhoodDescription": "Silver Lake is an exclusive neighborhood known for its luxury homes, top-rated schools, and proximity to upscale shopping and dining."
         }
     ]
 }

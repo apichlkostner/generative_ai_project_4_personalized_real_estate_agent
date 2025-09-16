@@ -5,13 +5,14 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
 
 import chromadb
+import configparser
 
 class Database:
     def __init__(self, persist_directory=".chroma_db", collection_name="real_estate", open_ai=True):
         self.persist_directory = persist_directory
         self.collection_name=collection_name
         if open_ai:
-            self.embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+            self.embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
         else:
             self.embeddings = OllamaEmbeddings(model="mxbai-embed-large")
 
@@ -57,8 +58,12 @@ class Database:
 #         print(f"Metadata: {all_data['metadatas'][i]}")
 
 def main():
-    db = Database(open_ai=False)
-    #db.load_data("data/data.json")
+    parser = configparser.ConfigParser()
+    parser.read("settings.ini")
+
+    open_ai = parser.getboolean("DEFAULT", "open_ai")
+    db = Database(open_ai=open_ai)
+    db.load_data("data/data.json")
     #db.load_db()
 
     #list_documents()

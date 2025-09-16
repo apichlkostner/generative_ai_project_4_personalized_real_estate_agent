@@ -1,4 +1,5 @@
-.chroma_db
+.chroma_db*
 .vscode
 .pytest_cache
 __pycache__
+backup

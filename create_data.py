@@ -1,4 +1,7 @@
 from langchain_ollama.chat_models import ChatOllama
+from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
+
 from langchain.prompts import (
     SystemMessagePromptTemplate,
     HumanMessagePromptTemplate
@@ -10,24 +13,29 @@ from typing import List
 import json
 
 class RealEstate(BaseModel):
-    Neighborhood: str = Field(default="GreenField", description="Neighborhood"),
-    Price: str = Field(default="500.000$", description="Price"),
-    Bedrooms: int = Field(default=3, description="Bedrooms"),
-    Bathrooms: int = Field(default=2, description="Bathrooms"),
-    HouseSize: int = Field(default=200, description="House size"),
-    Description:str = Field(default="", description="Description"),
-    NeighborhoodDescription: str = Field(default="", description="Neighborhood description")
+    Neighborhood: str = "Green Oaks"
+    Price: str = "500.000$"
+    Bedrooms: int = 3
+    Bathrooms: int = 2
+    HouseSize: int = 200
+    Description: str = ""
+    NeighborhoodDescription: str = ""
 
-class RealEstateCollection(RealEstate):
+class RealEstateCollection(BaseModel):
     RealEstateObj: List[RealEstate] = Field(description="List of RealEstates")
 
 class GenerateData:
     model = None
 
 
-    def init_model(self, model_name="llama3.2:1b-instruct-fp16", temperature=0.0):
-        model = ChatOllama(temperature=temperature, model=model_name)
-        self.model = model.with_structured_output(RealEstateCollection)
+    def init_model(self, open_ai=True, temperature=0.0):
+        if open_ai:
+            model_name = "gpt-4o-mini"
+            self.llm = ChatOpenAI(temperature=0.0, model=model_name)
+        else:
+            model_name="llama3.2:1b-instruct-fp16"
+            self.llm = ChatOllama(temperature=temperature, model=model_name)
+        self.model = self.llm.with_structured_output(RealEstateCollection)
 
     def generate_data(self):
         

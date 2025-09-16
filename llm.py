@@ -12,6 +12,7 @@ from langchain.prompts import (
 
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_ollama.chat_models import ChatOllama
+from langchain_openai import ChatOpenAI
 
 import json
 
@@ -19,18 +20,28 @@ import llm_history
 import user_data
 from database import Database
 
+import configparser
+import sys
+
+
 class RealEstate(BaseModel):
-    Price: str = Field(default="500.000$", description="Price"),
-    Bedrooms: int = Field(default=3, description="Bedrooms"),
-    Bathrooms: int = Field(default=2, description="Bathrooms"),
-    HouseSize: int = Field(default=200, description="House size"),
-    Description:str = Field(default="", description="Description"),
-    NeighborhoodDescription: str = Field(default="", description="Neighborhood description")
+    Neighborhood: str = "Green Oaks"
+    Price: str = "500.000$"
+    Bedrooms: int = 3
+    Bathrooms: int = 2
+    HouseSize: int = 200
+    Description: str = ""
+    NeighborhoodDescription: str = ""
 
 class LLM:
-    def __init__(self):
-        model_name = "llama3.2:1b-instruct-fp16"
-        self.llm = ChatOllama(temperature=0.0, model=model_name)
+    def __init__(self, open_ai=True):
+        if open_ai:
+            model_name = "gpt-4o-mini"
+            self.llm = ChatOpenAI(temperature=0.0, model=model_name)
+        else:
+            model_name = "llama3.2:1b-instruct-fp16"
+            self.llm = ChatOllama(temperature=0.0, model=model_name)
+        
         self.model = self.llm.with_structured_output(RealEstate)
         system_prompt = """
         You are AI that will recommend user a real estates based on their answers to personal questions. 
@@ -78,7 +89,6 @@ class LLM:
         return result.model_dump(mode="json", exclude_unset=True)
     
     def results(self, context):
-        history = llm_history.get_by_session_id("id_1")
         system_prompt = """
         You are AI that will recommend user a real estates based on their answers to personal questions. 
         You will only add information to your response that are in the users answers or than can be concluded from the answers.
@@ -91,29 +101,38 @@ class LLM:
         -------------------
         """
 
-        query = "Please write a summary about these houses and how they match to the users wishes."
+        query = "For each of these houses write an individual description with respect how they match the preferences mentioned before."
 
         prompt_template = ChatPromptTemplate.from_messages([
-            ("system", system_prompt),
-            ("user", "{query}"),
+            SystemMessagePromptTemplate.from_template(system_prompt),
+            MessagesPlaceholder(variable_name="history"),
+            HumanMessagePromptTemplate.from_template("{query}"),
         ])
 
-        pipeline = (
-            {
-                "query": lambda x: x["query"],
-                "context": lambda x: x["context"]
-            }
-            | prompt_template
-            | self.llm
+        pipeline = prompt_template | self.llm
+
+        pipeline_with_history = RunnableWithMessageHistory(
+            pipeline,
+            get_session_history=llm_history.get_by_session_id,
+            input_messages_key="query",
+            history_messages_key="history"
         )
 
-        result = pipeline.invoke({"query": query, "context": context})
+        result = pipeline_with_history.invoke({"query": query, "context": context,}, config={"session_id": "id_1"})
 
         return result.content
 
 
 def main():
-    real_estate_llm = LLM()
+    parser = configparser.ConfigParser()
+    parser.read("settings.ini")
+
+    open_ai = parser.getboolean("DEFAULT", "open_ai")
+    print("Open AI: ", open_ai)
+    sys.stdout.flush()
+
+
+    real_estate_llm = LLM(open_ai=open_ai)
 
     questions, answers = user_data.get_info()
     profile = real_estate_llm.conversation(history_dic={"questions": questions, "answers": answers})
@@ -121,7 +140,7 @@ def main():
     profile_json_string = json.dumps(profile, indent=2, sort_keys=False)
     print(profile_json_string, "\n\n\n")
 
-    db = Database(open_ai=False)
+    db = Database(open_ai=open_ai)
     db.load_db()
 
     results = db.similarity_search(profile_json_string, k=3)
