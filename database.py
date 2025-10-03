@@ -7,6 +7,12 @@ from langchain_openai import OpenAIEmbeddings
 import chromadb
 import configparser
 
+from sentence_transformers import SentenceTransformer
+from PIL import Image
+import numpy as np
+
+
+
 class Database:
     def __init__(self, persist_directory=".chroma_db", collection_name="real_estate", open_ai=True):
         self.persist_directory = persist_directory
@@ -15,10 +21,11 @@ class Database:
             self.embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
         else:
             self.embeddings = OllamaEmbeddings(model="mxbai-embed-large")
+        self.clip_model = SentenceTransformer("clip-ViT-B-32")
 
     def load_data(self, filename):
         loader = JSONLoader(file_path=filename, jq_schema=".RealEstateObj[]",
-                            text_content=False)
+                            text_content=False, metadata_func=metadata_func,)
         data = loader.load()
 
         for doc in data:
@@ -36,6 +43,14 @@ class Database:
 
     def similarity_search(self, query, k=3):
         return self.db.similarity_search(query, k)
+
+    def metadata_func(self, record: dict, metadata: dict) -> dict:
+        image_path = record.get("ImagePath")
+        metadata["ImagePath"] = image_path
+        img_embedding = self.clip_model.encode(Image.open(image_path)).tolist()
+        metadata["ImageEmbedding"] = img_embedding
+
+        return metadata
 
 # def list_documents():
 #     client = chromadb.PersistentClient(path=".chroma_db")
@@ -63,7 +78,7 @@ def main():
 
     open_ai = parser.getboolean("DEFAULT", "open_ai")
     db = Database(open_ai=open_ai)
-    db.load_data("data/data.json")
+    db.load_data("data/houses_with_images.json")
     #db.load_db()
 
     #list_documents()
