@@ -42,7 +42,7 @@ class LLM:
             model_name = "llama3.2:1b-instruct-fp16"
             self.llm = ChatOllama(temperature=0.0, model=model_name)
         
-        self.model = self.llm.with_structured_output(RealEstate)
+        self.model = self.llm
         system_prompt = """
         You are AI that will recommend user a real estates based on their answers to personal questions. 
         You will only add information to your response that are in the users answers or than can be concluded from the anserws.
@@ -72,7 +72,7 @@ class LLM:
 
         query = """
                 "Here is a list with questions and answers of a customer who is looking for a real estate.
-                Please write a short profile of the customer as json with
+                Please write a short profile of the customer with
                 - price range
                 - number of bedrooms
                 - numbr of bathrooms
@@ -101,7 +101,12 @@ class LLM:
         -------------------
         """
 
-        query = "For each of these houses write an individual description with respect how they match the preferences mentioned before."
+        query = """
+        For each of these houses write an individual description from the available information.
+        Don't just repeat the data set. Write for each house in the descritption why it matched the users needs.
+        """
+
+        #print("SYSTEMPROMPT:\n", system_prompt, "\n\nPROMPT;\n", query, "\n\nCONTEXT:\n", context)
 
         prompt_template = ChatPromptTemplate.from_messages([
             SystemMessagePromptTemplate.from_template(system_prompt),
@@ -129,23 +134,20 @@ def main():
 
     open_ai = parser.getboolean("DEFAULT", "open_ai")
     print("Open AI: ", open_ai)
-    sys.stdout.flush()
-
 
     real_estate_llm = LLM(open_ai=open_ai)
 
     questions, answers = user_data.get_info()
     profile = real_estate_llm.conversation(history_dic={"questions": questions, "answers": answers})
+    profile = profile['content']
     
-    profile_json_string = json.dumps(profile, indent=2, sort_keys=False)
-    print(profile_json_string, "\n\n\n")
-
     db = Database(open_ai=open_ai)
     db.load_db()
 
-    results = db.similarity_search(profile_json_string, k=3)
+    results = db.similarity_search(profile, k=3)
+    context = results[0].page_content + "\n---------------\n" + results[1].page_content + "\n---------------\n" + results[2].page_content + "\n---------------\n" 
 
-    answer_for_customer = real_estate_llm.results(results)
+    answer_for_customer = real_estate_llm.results(context)
     print(answer_for_customer)
 
 if __name__ == '__main__':
