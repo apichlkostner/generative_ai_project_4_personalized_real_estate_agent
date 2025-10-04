@@ -137,10 +137,10 @@ class LLM:
 
         return result.content
     
-def get_results():
+def get_results(answers):
     real_estate_llm = LLM(open_ai=True)
 
-    questions, answers = user_data.get_info()
+    questions, _ = user_data.get_info()
     profile = real_estate_llm.conversation(history_dic={"questions": questions, "answers": answers})
 
     profile_image = real_estate_llm.conversation_image(history_dic={"questions": questions, "answers": answers})
