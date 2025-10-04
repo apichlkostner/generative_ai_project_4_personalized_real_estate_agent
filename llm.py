@@ -8,6 +8,7 @@ from langchain.prompts import (
     ChatPromptTemplate
 )
 import configparser
+import re
 
 import llm_history
 import user_data
@@ -135,6 +136,48 @@ class LLM:
         result = pipeline_with_history.invoke({"query": query, "context": context,}, config={"session_id": "id_1"})
 
         return result.content
+    
+def get_results():
+    real_estate_llm = LLM(open_ai=True)
+
+    questions, answers = user_data.get_info()
+    profile = real_estate_llm.conversation(history_dic={"questions": questions, "answers": answers})
+
+    profile_image = real_estate_llm.conversation_image(history_dic={"questions": questions, "answers": answers})
+    #print(profile_image)
+    
+    db = Database(open_ai=True)
+
+    # First similarity search over the textual description
+    results = db.similarity_search_text(profile, k=6)
+    content = results["documents"][0]
+
+    # Second similarity search over the images
+    results_image = db.similarity_search_image(profile_image, k=15)
+    content_image = results_image["uris"][0]
+
+    # choose three samples
+    samples = ""
+    num_samples = 0
+    max_samples = 3
+    images = []
+    # get the 3 best image matches that are also good matches in the text search
+    for idx, id in enumerate(results_image['ids'][0]):
+        if num_samples >= max_samples:
+            break
+        if id in results['ids'][0]:
+            images.append(results_image['uris'][0][idx])
+            idx_results = results['ids'][0].index(id)
+            samples += f"{results['documents'][0][idx_results]}\n-------------------------------\n"
+            num_samples += 1
+
+    answer_for_customer = real_estate_llm.results(samples)
+    
+    datasets = re.split(r"\*\*\d+\.\s", answer_for_customer)
+    datasets = [d.strip() for d in datasets if d.strip()]
+
+    return images, datasets
+
 
 
 def main():
