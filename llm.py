@@ -101,7 +101,8 @@ class LLM:
     def results(self, context):
         system_prompt = """
         You are AI that will recommend user a real estates based on their answers to personal questions. 
-        You will only add information to your response that are in the users answers or than can be concluded from the answers.
+        You will only use information about the customer needs that are in the users answers or than can be concluded from the answers.
+
         Here are some available real estates that should be recommended to the user
 
         -------------------
@@ -112,8 +113,8 @@ class LLM:
         """
 
         query = """
-        For each of these houses write an individual description from the available information.
-        Don't just repeat the data set. Write for each house in the descritption why it matched the users needs.
+        For each of these houses write an individual description from the available information. Use only information which is available in the description.
+        Don't just repeat the data set. Write for each house in the descritption why it matched the users needs.        
         """
 
         #print("SYSTEMPROMPT:\n", system_prompt, "\n\nPROMPT;\n", query, "\n\nCONTEXT:\n", context)

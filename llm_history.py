@@ -18,7 +18,6 @@ class InMemoryHistory(BaseChatMessageHistory, BaseModel):
 
     def __init__(self, k = 50):
         super().__init__(k=k)
-        print(f"Initializing InMemoryHistory with k={k}")
 
     def add_messages(self, messages: list[BaseMessage]) -> None:
         """Add messages to the history, removing any messages beyond
