@@ -142,10 +142,10 @@ def main():
     profile = profile['content']
     
     db = Database(open_ai=open_ai)
-    db.load_db()
 
-    results = db.similarity_search(profile, k=3)
-    context = results[0].page_content + "\n---------------\n" + results[1].page_content + "\n---------------\n" + results[2].page_content + "\n---------------\n" 
+    results = db.similarity_search_text(profile, k=3)
+    content = results["documents"][0]
+    context = content[0] + "\n---------------\n" + content[1] + "\n---------------\n" + content[2] + "\n---------------\n" 
 
     answer_for_customer = real_estate_llm.results(context)
     print(answer_for_customer)

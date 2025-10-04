@@ -1,76 +1,91 @@
-from langchain_chroma import Chroma
-from langchain_community.document_loaders import JSONLoader
-
-from langchain_ollama import OllamaEmbeddings
-from langchain_openai import OpenAIEmbeddings
-
 import chromadb
+import chromadb.utils.embedding_functions as embedding_functions
+from chromadb.utils.data_loaders import ImageLoader
+
 import configparser
 
-from sentence_transformers import SentenceTransformer
-from PIL import Image
-import numpy as np
+from datetime import datetime
+import json
+import os
 
-
+data_template = \
+"""Neighborhood: {}
+Price: {}
+Bedrooms: {}
+Bathrooms: {}
+HouseSize: {}
+Description: {}
+NeighborhoodDescription: {}"""
 
 class Database:
     def __init__(self, persist_directory=".chroma_db", collection_name="real_estate", open_ai=True):
         self.persist_directory = persist_directory
         self.collection_name=collection_name
         if open_ai:
-            self.embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+            self.embedding_text = embedding_functions.OpenAIEmbeddingFunction(
+                model_name="text-embedding-3-large",
+                api_key=os.getenv("OPENAI_API_KEY"),
+                api_base=os.getenv("OPENAI_BASE_URL")
+            )
         else:
-            self.embeddings = OllamaEmbeddings(model="mxbai-embed-large")
-        self.clip_model = SentenceTransformer("clip-ViT-B-32")
+            self.embedding_text = embedding_functions.OllamaEmbeddingFunction(model_name="mxbai-embed-large")
 
-    def load_data(self, filename):
-        loader = JSONLoader(file_path=filename, jq_schema=".RealEstateObj[]",
-                            text_content=False, metadata_func=metadata_func,)
-        data = loader.load()
+        self.embedding_image = embedding_functions.OpenCLIPEmbeddingFunction()
+        self.db = chromadb.PersistentClient(path=persist_directory)
 
-        for doc in data:
-            print(f"Content: {doc.page_content}")
-            print(f"Metadata: {doc.metadata}")
+        self.create_collections()
 
-        self.db = Chroma.from_documents(data, embedding=self.embeddings, persist_directory=self.persist_directory, collection_name=self.collection_name)
+    def create_collections(self):        
+        self.col_text = self.db.get_or_create_collection(
+            name="real_estate_description",
+            embedding_function=self.embedding_text,
+            metadata={
+                "description": "Real-estate textual description",
+                "created": str(datetime.now())
+            })
+        
+        data_loader = ImageLoader()
+        self.col_image = self.db.get_or_create_collection(
+            name="real_estate_image",
+            embedding_function=self.embedding_image,
+            metadata={
+                "description": "Real-estate textual description",
+                "created": str(datetime.now()),
+                },
+            data_loader=data_loader
+            )
+        
+    def add_data_to_collections(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+        except FileNotFoundError:
+            print("Error: file not found: {filename}")
+        except json.JSONDecodeError:
+            print("Error: Failed to decode JSON from the file.")
 
-    def load_db(self):
-        self.db = Chroma(
-            persist_directory=self.persist_directory,
-            embedding_function=self.embeddings,
-            collection_name=self.collection_name
-        )
+        objects = data["RealEstateObj"]
+        ids = []
+        documents = []
+        metadatas = []
+        uris = []
+        for index, obj in enumerate(objects):
+            ids.append(f"id{index}")
+            documents.append(data_template.format(obj["Neighborhood"], obj["Price"], obj["Bedrooms"], obj["Bathrooms"],obj["HouseSize"], obj["Description"], obj["NeighborhoodDescription"]))
+            image_uri = f"house_images/{index}.png"
+            metadatas.append({"source" : filename, "index": index, "image": image_uri})
+            uris.append(image_uri)
 
-    def similarity_search(self, query, k=3):
-        return self.db.similarity_search(query, k)
+        self.col_text.add(ids=ids, documents=documents, metadatas=metadatas)
+        self.col_image.add(ids=ids, uris=uris)
 
-    def metadata_func(self, record: dict, metadata: dict) -> dict:
-        image_path = record.get("ImagePath")
-        metadata["ImagePath"] = image_path
-        img_embedding = self.clip_model.encode(Image.open(image_path)).tolist()
-        metadata["ImageEmbedding"] = img_embedding
+    def similarity_search_text(self, query, k=3):
+        return self.col_text.query(query_texts=query, n_results=k)
+    
+    def similarity_search_image(self, query, k=3):
+        return self.col_image.query(query_texts=query, include=['uris'], n_results=k)
 
-        return metadata
 
-# def list_documents():
-#     client = chromadb.PersistentClient(path=".chroma_db")
-#     # List all collections to find the correct one
-#     collections = client.list_collections()
-#     collection_names = [col.name for col in collections]
-#     print("Available collections:", collection_names)
-
-#     # Access the collection (replace with your collection name)
-#     collection = client.get_collection("real_estate")
-
-#     # Retrieve all data
-#     all_data = collection.get()
-
-#     # Print each document
-#     for i in range(len(all_data["ids"])):
-#         print(f"\n--- Document {i+1} ---")
-#         print(f"ID: {all_data['ids'][i]}")
-#         print(f"Content: {all_data['documents'][i]}")
-#         print(f"Metadata: {all_data['metadatas'][i]}")
 
 def main():
     parser = configparser.ConfigParser()
@@ -78,14 +93,21 @@ def main():
 
     open_ai = parser.getboolean("DEFAULT", "open_ai")
     db = Database(open_ai=open_ai)
-    db.load_data("data/houses_with_images.json")
-    #db.load_db()
 
-    #list_documents()
-    #results = db.similarity_search("silent neighborhood", k=3)
+    # try text search
+    results = db.similarity_search_text("luxus", k=3)
 
-    #for doc in results:
-    #    print(doc.page_content)
+    docs = results["documents"][0]
+    for doc in docs:
+        print(doc)
+        print("")
+
+    # try image search
+    results = db.similarity_search_image("red house", k=3)
+    docs = results["uris"][0]
+    for doc in docs:
+        print(doc)
+        print("")
 
 if __name__ == '__main__':
     main()
