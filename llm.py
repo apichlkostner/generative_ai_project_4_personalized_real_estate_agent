@@ -77,13 +77,41 @@ class LLM:
                 - number of bedrooms
                 - numbr of bathrooms
                 - size of the house
-                - wished for the house
+                - wishes for the house
                 - wishes for the neighborhood
         """
 
         result = pipeline_with_history.invoke(
             {"query": query},
             config={"session_id": "id_1"}
+        )
+
+        return result.model_dump(mode="json", exclude_unset=True)
+    
+    def conversation_image(self, history_dic):
+        # prefill history
+        history = llm_history.get_by_session_id("id_2")
+
+        for question, answer in zip(history_dic["questions"], history_dic["answers"]):
+            history.add_ai_message(question)
+            history.add_user_message(answer)
+
+        pipeline_with_history = RunnableWithMessageHistory(
+            self.pipeline,
+            get_session_history=llm_history.get_by_session_id,
+            input_messages_key="query",
+            history_messages_key="history"
+        )
+
+        query = """
+                "Here is a list with questions and answers of a customer who is looking for a real estate.
+                Please write a short profile of the customer with only the visual aspects which can be seen
+                from outside. Like the colour, windows size, garden.
+        """
+
+        result = pipeline_with_history.invoke(
+            {"query": query},
+            config={"session_id": "id_2"}
         )
 
         return result.model_dump(mode="json", exclude_unset=True)
@@ -140,12 +168,23 @@ def main():
     questions, answers = user_data.get_info()
     profile = real_estate_llm.conversation(history_dic={"questions": questions, "answers": answers})
     profile = profile['content']
+
+    profile_image = real_estate_llm.conversation_image(history_dic={"questions": questions, "answers": answers})
+    profile_image = profile_image['content']
+    print(profile_image)
     
     db = Database(open_ai=open_ai)
 
     results = db.similarity_search_text(profile, k=3)
     content = results["documents"][0]
     context = content[0] + "\n---------------\n" + content[1] + "\n---------------\n" + content[2] + "\n---------------\n" 
+
+    ####
+    results = db.similarity_search_image(profile_image, k=3)
+    content_image = results["uris"][0]
+    context_image = content_image[0] + "\n---------------\n" + content_image[1] + "\n---------------\n" + content_image[2] + "\n---------------\n" 
+    print(f"\n\n{context_image}\n\n")
+    ####
 
     answer_for_customer = real_estate_llm.results(context)
     print(answer_for_customer)
