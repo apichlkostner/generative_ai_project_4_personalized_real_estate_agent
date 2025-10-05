@@ -1,0 +1,13 @@
+chromadb==1.0.21
+diffusers==0.35.1
+Flask==3.1.2
+langchain==0.3.27
+langchain-community==0.3.29
+langchain-core==0.3.76
+langchain-ollama==0.3.7
+langchain-openai==0.3.33
+numpy==2.3.2
+ollama==0.5.3
+openai==1.107.1
+pydantic==2.11.7
+torch==2.8.0

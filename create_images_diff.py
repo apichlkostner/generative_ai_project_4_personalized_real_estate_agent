@@ -9,65 +9,70 @@ and then uses Stable Diffusion to create and save an image for each listing. The
 import json
 import os
 from openai import OpenAI
-from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
-from skimage import io
-from diffusers import DiffusionPipeline, AutoPipelineForText2Image
-from diffusers.utils import load_image, make_image_grid
-from diffusers import DiffusionPipeline, StableDiffusionPipeline
+from diffusers import StableDiffusionPipeline
 import torch
 
-client = OpenAI()
-prompt_client = OpenAI()
+from logger_config import Logger
+logger = Logger(name="CreateImages").get_logger()
 
-# Load your dataset
-with open("data/data.json", "r") as f:
-    data = json.load(f)
+def main():
+    logger.info("Start CreateImages")
 
-output_dir = "house_images"
-os.makedirs(output_dir, exist_ok=True)
+    logger.info("Create OpenAI client")
+    client = OpenAI()
 
-for idx, house in enumerate(data["RealEstateObj"]):
-    # 1. Create a good image generation prompt with a chat model
-    # Build prompt from data
-    prompt = (
-        f"A realistic real estate photo (exterior) of a {house['Bedrooms']}-bedroom, "
-        f"{house['Bathrooms']}-bathroom home in {house['Neighborhood']}, "
-        f"about {house['HouseSize']} sqft. "
-        f"{house['Description']} Neighborhood: {house['NeighborhoodDescription']}. "
-    )
+    # Load your dataset
+    with open("data/data.json", "r") as f:
+        data = json.load(f)
 
-    system_promt = """You are a generator for image generation prompts. Rewrite the following house description as a short vivid prompt,
-               suitable for a professional real estate catalog photo. The houses should have different colors and styles. The prompt must be short
-               so it fits the 77 token limit of CLIP."""
+    output_dir = "house_images"
+    os.makedirs(output_dir, exist_ok=True)
 
-    # Generate a concise, vivid prompt for image generation using a chat model
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": system_promt},
-            {"role": "user", "content": prompt}
-        ]
-    )
+    for idx, house in enumerate(data["RealEstateObj"]):
+        logger.info(f"Create prompt for {house["Neighborhood"]}")
 
-    image_prompt = response.choices[0].message.content
+        # 1. Create a good image generation prompt with a chat model
+        # Build prompt from data
+        prompt = (
+            f"A realistic real estate photo (exterior) of a {house['Bedrooms']}-bedroom, "
+            f"{house['Bathrooms']}-bathroom home in {house['Neighborhood']}, "
+            f"about {house['HouseSize']} sqft. "
+            f"{house['Description']} Neighborhood: {house['NeighborhoodDescription']}. "
+        )
 
-    # 2. Call stable diffusion model to generate the image
-    pipe = StableDiffusionPipeline.from_pretrained(
-        'stable-diffusion-v1-5/stable-diffusion-v1-5',
-        guidance_scale=12,
-        torch_dtype=torch.float16
-    )
-    pipe = pipe.to("cuda")
+        system_promt = """You are a generator for image generation prompts. Rewrite the following house description as a short vivid prompt,
+                suitable for a professional real estate catalog photo. The houses should have different colors and styles. The prompt must be short
+                so it fits the 77 token limit of CLIP."""
 
-    image = pipe(image_prompt).images[0]
+        # Generate a concise, vivid prompt for image generation using a chat model
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": system_promt},
+                {"role": "user", "content": prompt}
+            ]
+        )
 
-    # Save image to disk
-    filename = os.path.join(output_dir, f"{idx}.png")
-    image.save(filename)
+        image_prompt = response.choices[0].message.content
 
-    # Add image path to JSON entry
-    house["ImagePath"] = filename
+        # 2. Call stable diffusion model to generate the image
+        logger.info(f"Create image for {house["Neighborhood"]}")
+        logger.debug(f"Prompt for {house["Neighborhood"]}: {image_prompt}")
+        pipe = StableDiffusionPipeline.from_pretrained(
+            'stable-diffusion-v1-5/stable-diffusion-v1-5',
+            torch_dtype=torch.float16
+        )
+        if torch.cuda.is_available():
+            pipe = pipe.to("cuda")
 
-# Save updated dataset with image paths
-with open("houses_with_images.json", "w") as f:
-    json.dump(data, f, indent=2)
+        image = pipe(image_prompt).images[0]
+
+        # Save image to disk
+        filename = os.path.join(output_dir, f"{idx}.png")
+        logger.info(f"Write image as {filename}")
+        image.save(filename)
+
+    logger.info("Finished CreateImages")
+
+if __name__ == '__main__':
+    main()
