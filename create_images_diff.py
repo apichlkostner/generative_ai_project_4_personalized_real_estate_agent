@@ -1,3 +1,11 @@
+"""
+create_images_diff.py
+
+This script generates images for real estate listings using Stable Diffusion.
+It reads real estate data from a JSON file, generates a short vivid prompt for each listing using a language model,
+and then uses Stable Diffusion to create and save an image for each listing. The image path is added to the dataset.
+"""
+
 import json
 import os
 from openai import OpenAI
@@ -32,8 +40,7 @@ for idx, house in enumerate(data["RealEstateObj"]):
                suitable for a professional real estate catalog photo. The houses should have different colors and styles. The prompt must be short
                so it fits the 77 token limit of CLIP."""
 
-    
-    # Create image prompt
+    # Generate a concise, vivid prompt for image generation using a chat model
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -44,9 +51,7 @@ for idx, house in enumerate(data["RealEstateObj"]):
 
     image_prompt = response.choices[0].message.content
 
-
-    # 2. Call stable diffusion model
-
+    # 2. Call stable diffusion model to generate the image
     pipe = StableDiffusionPipeline.from_pretrained(
         'stable-diffusion-v1-5/stable-diffusion-v1-5',
         guidance_scale=12,
@@ -56,13 +61,13 @@ for idx, house in enumerate(data["RealEstateObj"]):
 
     image = pipe(image_prompt).images[0]
 
-    # Save image
+    # Save image to disk
     filename = os.path.join(output_dir, f"{idx}.png")
     image.save(filename)
 
     # Add image path to JSON entry
     house["ImagePath"] = filename
 
-# Save updated dataset
+# Save updated dataset with image paths
 with open("houses_with_images.json", "w") as f:
     json.dump(data, f, indent=2)

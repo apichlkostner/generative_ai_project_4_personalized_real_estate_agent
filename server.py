@@ -1,9 +1,36 @@
+"""
+Flask web server for personalized real estate recommendations.
+
+This server presents a form to users to collect their preferences for a dream home,
+processes the input using an LLM-based backend, and displays recommended properties
+with images and descriptions.
+
+Endpoints:
+- "/" (GET): Show the input form.
+- "/results" (POST): Process form and show recommendations.
+- "/image/<int:num>" (GET): Serve images for recommendations.
+"""
+
 from flask import Flask, render_template_string, send_file
 from llm import get_results 
 
 app = Flask(__name__)
 
 def compute_results(size, priorities, amenities, transport, urban, style):
+    """
+    Compute recommended properties based on user preferences.
+
+    Args:
+        size (str): Desired house size.
+        priorities (str): User's top priorities.
+        amenities (str): Desired amenities.
+        transport (str): Important transportation options.
+        urban (str): Desired urbanicity.
+        style (str): Preferred house style.
+
+    Returns:
+        tuple: (list of image file paths, list of descriptions)
+    """
     answers = [size, priorities, amenities, transport, urban, style]
     chosen_images, descriptions = get_results(answers)
 
@@ -12,6 +39,9 @@ def compute_results(size, priorities, amenities, transport, urban, style):
 
 @app.route("/", methods=["GET"])
 def form():
+    """
+    Render the HTML form for collecting user preferences.
+    """
     html = """
     <html>
     <head>
@@ -59,6 +89,9 @@ from flask import request
 
 @app.route("/results", methods=["POST"])
 def results():
+    """
+    Handle form submission, compute recommendations, and render results page.
+    """
     global images
     # Collect answers
     size = request.form["size"]
@@ -104,6 +137,15 @@ def results():
 
 @app.route("/image/<int:num>")
 def image(num):
+    """
+    Serve the image file for the given recommendation index.
+
+    Args:
+        num (int): Index of the image to serve.
+
+    Returns:
+        Response: Image file or 404 error.
+    """
     global images
     if 0 <= num < len(images):
         return send_file(images[num], mimetype="image/png")
@@ -111,4 +153,7 @@ def image(num):
         return "No such image", 404
 
 if __name__ == "__main__":
+    """
+    Run the Flask development server.
+    """
     app.run(debug=True)

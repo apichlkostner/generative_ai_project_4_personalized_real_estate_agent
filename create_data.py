@@ -1,3 +1,10 @@
+"""
+create_data.py
+
+This script generates synthetic real estate listing data using language models (OpenAI or Ollama via LangChain).
+It defines data models for real estate listings, sets up a prompt for the language model, and saves the generated data as JSON.
+"""
+
 from langchain_ollama.chat_models import ChatOllama
 from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
@@ -9,10 +16,15 @@ from langchain.prompts import (
 from langchain.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from typing import List
-
 import json
 
+from logger_config import Logger
+logger = Logger(name="CreateData").get_logger()
+
 class RealEstate(BaseModel):
+    """
+    Data model representing a single real estate listing.
+    """
     Neighborhood: str = "Green Oaks"
     Price: str = "500.000$"
     Bedrooms: int = 3
@@ -22,22 +34,44 @@ class RealEstate(BaseModel):
     NeighborhoodDescription: str = ""
 
 class RealEstateCollection(BaseModel):
+    """
+    Data model representing a collection of real estate listings.
+    """
     RealEstateObj: List[RealEstate] = Field(description="List of RealEstates")
 
 class GenerateData:
+    """
+    Class to generate synthetic real estate data using a language model.
+    """
     model = None
 
 
     def init_model(self, open_ai=True, temperature=0.0):
+        """
+        Initialize the language model for data generation.
+
+        Args:
+            open_ai (bool): If True, use OpenAI model; otherwise, use Ollama.
+            temperature (float): Sampling temperature for the model.
+        """
         if open_ai:
             model_name = "gpt-4o-mini"
             self.llm = ChatOpenAI(temperature=0.0, model=model_name)
         else:
             model_name="llama3.2:1b-instruct-fp16"
             self.llm = ChatOllama(temperature=temperature, model=model_name)
+
+        logger.info(f"Initialize LLM {model_name}")
+
         self.model = self.llm.with_structured_output(RealEstateCollection)
 
     def generate_data(self):
+        """
+        Generate synthetic real estate data using the initialized language model.
+
+        Returns:
+            RealEstateCollection: Generated collection of real estate listings.
+        """
         
         prompt = """
         You are a random real estate lising generator. Your output should be a json file. Just return the json file, no additional information or text.
@@ -81,6 +115,7 @@ class GenerateData:
 
         example = json.dumps(example_dic, sort_keys=False)
 
+        logger.info(f"Invoke LLM pipeline")
         result = pipeline.invoke({"query": query, "example": example})
 
         return result
@@ -88,6 +123,10 @@ class GenerateData:
 
 
 def main():
+    """
+    Main function to generate data and save it as a JSON file.
+    """
+    logger.info(f"Starting data generation")
     generator = GenerateData()
     generator.init_model(temperature=0.0)
     data = generator.generate_data()
@@ -100,6 +139,8 @@ def main():
 
     with open('data/data.json', 'w') as file:
         json.dump(data_json, file, indent=4, sort_keys=False)
+
+    logger.info(f"Finished data generation")
 
 if __name__ == '__main__':
     main()

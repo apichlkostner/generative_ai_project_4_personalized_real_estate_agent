@@ -1,3 +1,11 @@
+"""
+llm.py
+
+This module provides the LLM class and related functions for recommending real estate properties
+based on user answers to personal questions. It leverages language models (OpenAI or Ollama)
+to generate user profiles and match them with suitable real estate listings using both text and image similarity.
+"""
+
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_ollama.chat_models import ChatOllama
 from langchain_openai import ChatOpenAI
@@ -16,7 +24,22 @@ from database import Database
 
 
 class LLM:
+    """
+    LLM class for interacting with language models to generate user profiles and recommend real estate listings.
+
+    Attributes:
+        llm: The language model instance (OpenAI or Ollama).
+        model: Alias for llm.
+        pipeline: The prompt pipeline for conversation.
+    """
+
     def __init__(self, open_ai=True):
+        """
+        Initialize the LLM with either OpenAI or Ollama model.
+
+        Args:
+            open_ai (bool): If True, use OpenAI model; otherwise, use Ollama.
+        """
         if open_ai:
             model_name = "gpt-4o-mini"
             self.llm = ChatOpenAI(temperature=0.0, model=model_name)
@@ -38,6 +61,15 @@ class LLM:
         self.pipeline = prompt_template | self.model
 
     def conversation(self, history_dic):
+        """
+        Generate a customer profile based on a history of questions and answers.
+
+        Args:
+            history_dic (dict): Dictionary with 'questions' and 'answers' lists.
+
+        Returns:
+            str: Generated customer profile.
+        """
         # prefill history
         history = llm_history.get_by_session_id("id_1")
 
@@ -71,6 +103,15 @@ class LLM:
         return result.content
     
     def conversation_image(self, history_dic):
+        """
+        Generate a customer profile focusing only on visual aspects (e.g., exterior features).
+
+        Args:
+            history_dic (dict): Dictionary with 'questions' and 'answers' lists.
+
+        Returns:
+            str: Generated visual profile.
+        """
         # prefill history
         history = llm_history.get_by_session_id("id_2")
 
@@ -99,6 +140,15 @@ class LLM:
         return result.content
     
     def results(self, context):
+        """
+        Generate individual descriptions for each recommended house, explaining why it matches user needs.
+
+        Args:
+            context (str): Context string containing available real estate information.
+
+        Returns:
+            str: Generated descriptions for each house.
+        """
         system_prompt = """
         You are AI that will recommend user a real estates based on their answers to personal questions. 
         You will only use information about the customer needs that are in the users answers or than can be concluded from the answers.
@@ -139,6 +189,15 @@ class LLM:
         return result.content
     
 def get_results(answers):
+    """
+    Main function to get recommended real estate images and descriptions based on user answers.
+
+    Args:
+        answers (list): List of user answers.
+
+    Returns:
+        tuple: (images, datasets) where images is a list of image URIs and datasets is a list of descriptions.
+    """
     real_estate_llm = LLM(open_ai=True)
 
     questions, _ = user_data.get_info()
@@ -182,6 +241,10 @@ def get_results(answers):
 
 
 def main():
+    """
+    Main entry point for running the real estate recommendation pipeline.
+    Reads configuration, generates user profiles, performs similarity search, and prints results.
+    """
     parser = configparser.ConfigParser()
     parser.read("settings.ini")
 
